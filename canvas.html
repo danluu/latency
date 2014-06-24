@@ -1,0 +1,25 @@
+<script>
+var timeouts = {};
+  function cbFillRect(rectName) {
+  var rect0 = document.getElementById(rectName);
+  var context = rect0.getContext("2d");
+  clearTimeout(timeouts[rectName]);
+  timeouts[rectName] = setTimeout(function () {
+    context.fillRect(0,0,200,200);
+    rect0.onclick = function() { cbClearRect(rectName) };
+  }, 500);
+}
+  function cbClearRect(rectName) {
+  var rect0 = document.getElementById(rectName);
+  var context = rect0.getContext("2d");
+  clearTimeout(timeouts[rectName]);
+  timeouts[rectName] = setTimeout(function () {
+    context.clearRect(0,0,200,200);
+    rect0.onclick = function() { cbFillRect(rectName) };
+  }, 500);
+}
+</script>
+<html>
+<canvas onclick="cbFillRect(0);" id="0" width="200" height="200" style= "border:1px solid black"> A rectangle</canvas>
+<canvas onclick="cbFillRect(1);" id="1" width="200" height="200" style= "border:1px solid black"> A rectangle</canvas>
+</html>
