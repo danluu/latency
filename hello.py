@@ -1,4 +1,6 @@
 from flask import Flask, redirect, render_template, url_for
+from flask.ext.wtf import Form
+from wtforms import TextField, validators
 app = Flask(__name__)
 
 @app.route('/')
@@ -16,5 +18,21 @@ def a_template():
     """Use a template"""
     return render_template('template.html')
 
+class RegoForm(Form):
+    """A rego form"""
+    email = TextField('Email', validators=(validators.DataRequired(),
+                                           validators.Email()))
+
+@app.route('/register', methods=('GET', 'POST'))
+def get_register():
+    """Handle the registration form"""
+    form = RegoForm()
+
+    if form.validate_on_submit():
+        return "Success"
+
+    return render_template('template.html', form=form)
+
 if __name__ == '__main__':
+    app.secret_key = 'CHECK OUT THIS KEY ON GITHUB'
     app.run(debug=True)
