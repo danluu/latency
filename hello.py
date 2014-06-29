@@ -1,7 +1,10 @@
 from flask import Flask, redirect, render_template, url_for
 from flask.ext.wtf import Form
 from wtforms import TextField, validators
+
 app = Flask(__name__)
+app.secret_key = 'CHECK OUT THIS KEY ON GITHUB'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../app.db'
 
 @app.route('/')
 def index():
@@ -34,5 +37,4 @@ def get_register():
     return render_template('template.html', form=form)
 
 if __name__ == '__main__':
-    app.secret_key = 'CHECK OUT THIS KEY ON GITHUB'
     app.run(debug=True)
